@@ -15,3 +15,10 @@
     font-size: 16px;
 
 }
+
+.taskStatus {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    vertical-align: center;
+}

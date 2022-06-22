@@ -3,9 +3,11 @@
 function controller (model, view, payload) {
     const todoForm = payload.todoForm
     const todoItems = payload.todoItems
+    const todoStatus = payload.todoStatus
     const todoFormSelector = document.querySelector(todoForm)
     const todoItemsSelector = document.querySelector(todoItems)
-    view.init (todoFormSelector, todoItemsSelector)
+    const todoStatusSelector = document.querySelector(todoStatus)
+    view.init (todoFormSelector, todoItemsSelector, todoStatusSelector)
     model.init (todoForm)
 
     const fetchForm = (inputs) => {
@@ -25,7 +27,7 @@ function controller (model, view, payload) {
         event.stopPropagation()
         event.preventDefault()
 
-        const inputs = document.querySelectorAll(`input, textarea`)
+        const inputs = document.querySelectorAll(`input, textarea, select`)
         const data = model.setData(fetchForm(inputs))
 
         if (!data.success) throw Error ("empty data")
@@ -53,11 +55,19 @@ function controller (model, view, payload) {
         view.removeTodoItem(todoId)
     }
 
+    const updateHandler = (event) => {
+        console.log(event)
+    }
+
     todoFormSelector.addEventListener(`submit`, submitHandler)
 
     window.addEventListener(`DOMContentLoaded`, loadHandler)
 
     todoItemsSelector.addEventListener(`click`, removeTodoHandler)
+
+    // todoStatusSelector.addEventListener(`click`, updateHandler)
+
+    console.log(document.querySelector(`#taskDescription`))
 
     return {
 

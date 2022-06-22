@@ -10,6 +10,14 @@ function view () {
         createWrapper.innerHTML = `<div class="taskWrapper">
                 <div class="taskHeading">${data.title}</div>
                 <div class="taskDescription">${data.description}</div>
+                <div class="taskStatus mt-3" id="taskStatus">
+                    <label class="form-label mr-3">Status</label>
+                    <select name="status" id="todoSelect" class="form-select" >
+                        <option value="noStatus">no-status</option>
+                        <option value="pending">pending</option>
+                        <option value="complete">completed</option>
+                    </select>
+                </div>
                 <button class="btn btn-danger mt-3 remove">Remove</button>
             </div>`
         return createWrapper
@@ -19,6 +27,7 @@ function view () {
     return {
         todoFormSelector: null,
         todoItemsSelector: null,
+        todoStatusSelector: null,
 
         clearForm (){
             this.todoFormSelector.reset()
@@ -33,10 +42,10 @@ function view () {
             this.todoItemsSelector.append(todoNote)
         },
 
-        init (todoFormSelector, todoItemsSelector) {
+        init (todoFormSelector, todoItemsSelector, todoStatusSelector) {
             this.todoFormSelector = todoFormSelector
             this.todoItemsSelector = todoItemsSelector
-
+            this.todoStatusSelector = todoStatusSelector
         }
     }
 }

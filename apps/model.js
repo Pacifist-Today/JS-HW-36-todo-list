@@ -3,7 +3,7 @@
 function model () {
     return {
         dbName: null,
-        todoID: null,
+        id: null,
 
         dbKey (key) {
             if (!key.trim()) throw new Error ("no selector")
@@ -17,7 +17,8 @@ function model () {
         setData(data) {
             let copyData = structuredClone(data)
             let response = null
-            copyData.id = this.todoID
+            copyData.id = this.id
+
 
             const checkingForm = this.getData()
             if (!checkingForm){
@@ -34,7 +35,7 @@ function model () {
                     success: true,
                     savedData: copyData
                 }
-                this.todoID++
+                this.id++
             }   catch (error) {
                 response = {
                     success: false,
@@ -60,7 +61,7 @@ function model () {
         init (todoForm) {
             this.dbKey(todoForm)
             const checkingForm = this.getData()
-            this.todoID = checkingForm ? checkingForm[checkingForm.length-1].id + 1 : 1;
+            this.id = checkingForm ? checkingForm[checkingForm.length-1].id + 1 : 1;
         }
     }
 }
