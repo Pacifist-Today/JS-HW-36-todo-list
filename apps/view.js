@@ -2,6 +2,7 @@
 
 function view () {
 
+
     const createTodoItem = (data) => {
         const createWrapper = document.createElement('div')
         createWrapper.classList.add(`col-4`)
@@ -12,10 +13,10 @@ function view () {
                 <div class="taskDescription">${data.description}</div>
                 <div class="taskStatus mt-3" id="taskStatus">
                     <label class="form-label mr-3">Status</label>
-                    <select name="status" id="todoSelect" class="form-select" >
-                        <option value="noStatus">no-status</option>
-                        <option value="pending">pending</option>
-                        <option value="complete">completed</option>
+                    <select name="status" class="form-select">
+                        <option value="noStatus" ${data.status === `noStatus` ? `selected` : ``} class="options">noStatus</option>
+                        <option value="pending" ${data.status === `pending` ? `selected` : ``}  class="options">pending</option>
+                        <option value="completed" ${data.status === `completed` ? `selected` : ``} class="options">completed</option>
                     </select>
                 </div>
                 <button class="btn btn-danger mt-3 remove">Remove</button>
@@ -29,7 +30,7 @@ function view () {
         todoItemsSelector: null,
         todoStatusSelector: null,
 
-        clearForm (){
+        clearForm() {
             this.todoFormSelector.reset()
         },
 
@@ -37,12 +38,12 @@ function view () {
             document.querySelector(`[data-todo-id="${id}"]`).remove()
         },
 
-        renderTodoItem (data) {
+        renderTodoItem(data) {
             const todoNote = createTodoItem(data)
             this.todoItemsSelector.append(todoNote)
         },
 
-        init (todoFormSelector, todoItemsSelector, todoStatusSelector) {
+        init(todoFormSelector, todoItemsSelector, todoStatusSelector) {
             this.todoFormSelector = todoFormSelector
             this.todoItemsSelector = todoItemsSelector
             this.todoStatusSelector = todoStatusSelector

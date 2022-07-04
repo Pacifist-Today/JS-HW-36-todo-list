@@ -18,6 +18,7 @@ function model () {
             let copyData = structuredClone(data)
             let response = null
             copyData.id = this.id
+            copyData.status = `noStatus`
 
 
             const checkingForm = this.getData()
@@ -56,6 +57,21 @@ function model () {
             }   else    {
                 localStorage.removeItem(this.dbName)
             }
+        },
+
+        updateTodoItem (id, event) {
+            const data = structuredClone(this.getData())
+
+            if (!data.length) return
+
+            data.forEach(element => {
+                if (element.id === id) {
+                    element.status = event.target.value
+                }
+            })
+
+            console.log(data)
+            localStorage.setItem(this.dbName, JSON.stringify(data))
         },
 
         init (todoForm) {

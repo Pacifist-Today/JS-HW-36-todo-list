@@ -14,6 +14,7 @@ function controller (model, view, payload) {
         let data = null
         if (inputs instanceof NodeList) {
             data = Array.from(inputs)
+            console.log(data)
         }
 
         return data.reduce((acc, item) => {
@@ -44,7 +45,7 @@ function controller (model, view, payload) {
             view.renderTodoItem(item)
         })
     }
-    
+
     const removeTodoHandler = event => {
         event.stopPropagation()
         if (!event.target.classList.contains(`remove`)) return
@@ -56,7 +57,15 @@ function controller (model, view, payload) {
     }
 
     const updateHandler = (event) => {
-        console.log(event)
+        event.stopPropagation()
+        const formSelect = event.target.classList.contains(`form-select`)
+        if (!formSelect) return
+
+        let id = event.target.closest(`[data-todo-id]`).getAttribute(`data-todo-id`)
+        id = Number(id)
+
+        model.updateTodoItem(id, event)
+        view.updateTodoItem(model.getData())
     }
 
     todoFormSelector.addEventListener(`submit`, submitHandler)
@@ -65,9 +74,7 @@ function controller (model, view, payload) {
 
     todoItemsSelector.addEventListener(`click`, removeTodoHandler)
 
-    // todoStatusSelector.addEventListener(`click`, updateHandler)
-
-    console.log(document.querySelector(`#taskDescription`))
+    todoItemsSelector.addEventListener(`change`, updateHandler)
 
     return {
 
