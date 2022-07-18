@@ -37,13 +37,48 @@ function controller (model, view, payload) {
         view.clearForm()
     }
 
+    // working loader without iterators
+
+    // const loadHandler = () => {
+    //     const todoItems = model.getData()
+    //     if (!model.getData()) return
+    //
+    //     todoItems.forEach(item => {
+    //         view.renderTodoItem(item)
+    //     })
+    // }
+
+    // Iterators
+
     const loadHandler = () => {
         const todoItems = model.getData()
-        if (!model.getData()) return
+        let todoItemsObj = {...todoItems}
+        let count = 0
+        let itr = Object.values(todoItemsObj[count++])[Symbol.iterator]()
 
-        todoItems.forEach(item => {
-            view.renderTodoItem(item)
-        })
+        let title = itr.next()
+        let description = itr.next()
+        let id = itr.next()
+        let status = itr.next()
+
+        if (title.value.length >= 1) {
+            console.log(title)
+        }
+            else return
+        if (description.value.length >= 1){
+            console.log(description)
+        }
+            else return;
+        if (typeof +id.value === `number`) {
+            console.log(id)
+        }
+            else return;
+        if (status.value === `noStatus` || status.value === `pending` || status.value === `completed`) {
+            console.log(status)
+            todoItems.forEach(item => {
+                view.renderTodoItem(item)
+            })
+        }   else return;
     }
 
     const removeTodoHandler = event => {
