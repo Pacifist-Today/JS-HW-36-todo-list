@@ -37,7 +37,7 @@ function controller (model, view, payload) {
         view.clearForm()
     }
 
-    // working loader without iterators
+    // working loader without iterators and generator
 
     // const loadHandler = () => {
     //     const todoItems = model.getData()
@@ -48,7 +48,7 @@ function controller (model, view, payload) {
     //     })
     // }
 
-    // Iterators
+    // Iterators and generator
 
     const loadHandler = () => {
         const todoItems = model.getData()
@@ -75,10 +75,19 @@ function controller (model, view, payload) {
             else return;
         if (status.value === `noStatus` || status.value === `pending` || status.value === `completed`) {
             console.log(status)
-            todoItems.forEach(item => {
-                view.renderTodoItem(item)
-            })
         }   else return;
+
+        let itrRender = Object.values(todoItemsObj)[Symbol.iterator]()
+
+        function* generator (obj) {
+            for (let card in obj) {
+                console.log(obj[card])
+                view.renderTodoItem(obj[card])
+            }
+        }
+
+        let gen = generator(todoItemsObj)
+        gen.next()
     }
 
     const removeTodoHandler = event => {
